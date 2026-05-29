@@ -890,6 +890,66 @@
       margin-bottom: 32px;
     }
 
+    /* ─── LEGAL PAGES ─────────────────────────────────────────── */
+    .legal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(6px);
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .legal-overlay.open { opacity: 1; pointer-events: all; }
+    .legal-box {
+      width: 90vw; max-width: 720px;
+      max-height: 80vh;
+      background: #111;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 4px;
+      padding: 56px 48px;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(30px);
+      transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+    }
+    .legal-overlay.open .legal-box { transform: translateY(0); }
+    .legal-close {
+      position: sticky; top: 0; float: right;
+      font-size: 28px; background: none; border: none;
+      color: var(--muted); cursor: none;
+      transition: color .2s;
+      z-index: 1;
+    }
+    .legal-close:hover { color: var(--red); }
+    #legal-content h2 {
+      font-family: var(--font-en);
+      font-size: 32px; letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    #legal-content .legal-date {
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+    #legal-content h3 {
+      font-size: 16px; font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--cyan);
+      letter-spacing: 1px;
+    }
+    #legal-content p, #legal-content li {
+      font-size: 13px; line-height: 2;
+      color: rgba(245,245,240,.65);
+    }
+    #legal-content ul { padding-left: 20px; margin-bottom: 16px; }
+    #legal-content li { margin-bottom: 4px; }
+    @media (max-width: 640px) {
+      .legal-box { padding: 36px 24px; width: 95vw; }
+    }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 1024px) {
       .works-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1474,9 +1534,9 @@
     <div class="footer-col">
       <h4>Legal</h4>
       <ul>
-        <li>使用条款</li>
-        <li>隐私政策</li>
-        <li>版权声明</li>
+        <li><a href="#" onclick="openLegal('terms');return false">使用条款</a></li>
+        <li><a href="#" onclick="openLegal('privacy');return false">隐私政策</a></li>
+        <li><a href="#" onclick="openLegal('copyright');return false">版权声明</a></li>
       </ul>
     </div>
   </div>
@@ -1539,11 +1599,178 @@
   </div>
 </div>
 
-<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<!-- ═══════════════ LEGAL PAGES MODAL ═══════════════ -->
+<div id="legal-overlay" class="legal-overlay" aria-hidden="true">
+  <div class="legal-box">
+    <button class="legal-close" onclick="closeLegal()" aria-label="关闭">×</button>
+    <div id="legal-content"></div>
+  </div>
+</div>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
 // ── AOS init ──
 AOS.init({ once: true, offset: 80, duration: 700, easing: 'ease-out-cubic' });
+
+// ── Legal pages ──
+const legalData = {
+  terms: {
+    title: '使用条款',
+    date: 'Effective: 2026 · 05 · 29',
+    body: `
+      <h3>1. 总则</h3>
+      <p>欢迎使用 NON-遗界·潮涌东方（以下简称"本平台"）。访问或使用本平台即表示您同意遵守以下条款。本平台由 DSArt+AI STUDIO 运营管理。</p>
+
+      <h3>2. 账户注册与使用</h3>
+      <ul>
+        <li>用户应提供真实、准确的注册信息，并对账户安全承担全部责任。</li>
+        <li>禁止将账户转让、出售或借予第三方使用。</li>
+        <li>如发现未经授权的账户使用，请立即通知平台。</li>
+      </ul>
+
+      <h3>3. 内容规范</h3>
+      <p>用户在本平台发布的内容（包括但不限于文字、图片、视频、评论）须遵守相关法律法规，不得含有以下内容：</p>
+      <ul>
+        <li>违反国家法律法规、危害国家安全的信息。</li>
+        <li>侵犯他人知识产权、肖像权、隐私权等合法权益的内容。</li>
+        <li>含有虚假、误导性信息或恶意诽谤的内容。</li>
+        <li>任何形式的商业垃圾信息或未经授权的广告。</li>
+      </ul>
+
+      <h3>4. 知识产权声明</h3>
+      <p>本平台所有原创内容（包括但不限于设计、文案、图片、视频、代码）均受《中华人民共和国著作权法》及相关国际公约保护。未经书面授权，任何组织或个人不得以任何形式复制、转载、传播或商业使用。</p>
+
+      <h3>5. 免责声明</h3>
+      <ul>
+        <li>本平台提供的所有信息仅供参考，不构成任何投资或商业建议。</li>
+        <li>因不可抗力或技术故障导致的服务中断，本平台不承担责任。</li>
+        <li>用户因自身原因造成的损失，本平台不承担赔偿责任。</li>
+      </ul>
+
+      <h3>6. 条款修改</h3>
+      <p>本平台保留随时修改本使用条款的权利。修改后的条款将在本页面公布，继续使用本平台即视为接受修订后的条款。建议您定期查阅本页面以获取最新信息。</p>
+
+      <h3>7. 联系方式</h3>
+      <p>如有任何疑问，请通过以下方式联系我们：<br>Email: contact@non-heritage.art<br>运营方：DSArt+AI STUDIO</p>
+    `
+  },
+  privacy: {
+    title: '隐私政策',
+    date: 'Effective: 2026 · 05 · 29',
+    body: `
+      <h3>1. 信息收集</h3>
+      <p>NON-遗界·潮涌东方（以下简称"本平台"）重视您的隐私保护。我们可能收集以下信息：</p>
+      <ul>
+        <li><strong>注册信息</strong>：用户名、邮箱地址、手机号码（自愿提供）。</li>
+        <li><strong>使用数据</strong>：浏览记录、访问频率、设备信息、IP 地址。</li>
+        <li><strong>Cookie 数据</strong>：用于提升浏览体验和个性化推荐。</li>
+      </ul>
+
+      <h3>2. 信息使用</h3>
+      <p>我们收集的信息将用于以下目的：</p>
+      <ul>
+        <li>提供、维护和改进本平台的服务功能。</li>
+        <li>发送服务通知、活动信息和运营更新（可随时退订）。</li>
+        <li>分析使用趋势，优化用户体验和内容策略。</li>
+        <li>保障平台安全，预防和处理违规行为。</li>
+      </ul>
+
+      <h3>3. 信息保护</h3>
+      <p>我们采用行业标准的安全技术和管理措施保护您的个人信息，包括但不限于数据加密、访问权限控制和安全审计。我们不会向第三方出售或交易您的个人信息。</p>
+
+      <h3>4. 信息共享</h3>
+      <p>在以下情况下，我们可能会共享您的信息：</p>
+      <ul>
+        <li>获得您的明确同意后。</li>
+        <li>法律法规要求或行政、司法机关依法调取。</li>
+        <li>为保护本平台及其他用户的合法权益所必需。</li>
+      </ul>
+
+      <h3>5. 用户权利</h3>
+      <p>您有权随时：</p>
+      <ul>
+        <li>查阅和更正您的个人信息。</li>
+        <li>请求删除您的账户及相关数据。</li>
+        <li>撤回之前给予的信息使用授权。</li>
+        <li>退订营销类信息推送。</li>
+      </ul>
+
+      <h3>6. Cookie 政策</h3>
+      <p>本平台使用 Cookie 以提升浏览体验。您可以通过浏览器设置管理或禁用 Cookie，但这可能影响部分功能的使用。继续使用本平台即视为同意 Cookie 的使用。</p>
+
+      <h3>7. 政策更新</h3>
+      <p>本隐私政策可能不时更新，修改后将在本页面公布。如有重大变更，我们将通过站内通知或邮件告知您。</p>
+
+      <h3>8. 联系方式</h3>
+      <p>隐私相关疑问请联系：<br>Email: privacy@non-heritage.art<br>运营方：DSArt+AI STUDIO</p>
+    `
+  },
+  copyright: {
+    title: '版权声明',
+    date: 'Effective: 2026 · 05 · 29',
+    body: `
+      <h3>1. 版权归属</h3>
+      <p>NON-遗界·潮涌东方（non-heritage.art）网站及平台上的所有原创内容，包括但不限于视觉设计、文字内容、图片素材、视频资料、动画效果、代码架构、品牌标识（NON-遗界、潮涌东方及相关 LOGO），其知识产权均归 DSArt+AI STUDIO 所有，受《中华人民共和国著作权法》及国际知识产权相关法律保护。</p>
+
+      <h3>2. 非遗技艺内容</h3>
+      <p>本平台展示的非物质文化遗产相关技艺内容（包括但不限于漆艺、蜀锦、皮影、剪纸、蜡染等非遗技艺介绍、图片及影像资料）均已获得相关传承人、艺术家或合作机构的授权。未经授权，不得擅自复制、传播或用于商业用途。</p>
+
+      <h3>3. 第三方内容</h3>
+      <p>本平台可能引用或展示来自第三方的资料（如合作机构、艺术家作品），此类内容的知识产权归原作者所有。引用时均以合理使用为原则，并尽可能注明来源。如有异议，请联系我们及时处理。</p>
+
+      <h3>4. 使用许可</h3>
+      <ul>
+        <li><strong>个人浏览</strong>：允许出于个人欣赏目的的正常浏览和访问。</li>
+        <li><strong>分享转发</strong>：允许通过平台提供的分享功能进行非商业性分享，但须保留原始来源链接。</li>
+        <li><strong>禁止行为</strong>：未经书面授权，禁止以下行为：
+          <ul>
+            <li>以任何形式复制、下载、截屏、抓取平台内容。</li>
+            <li>将平台内容用于商业推广、二次创作或教育培训。</li>
+            <li>去除、篡改平台的水印、版权标识或来源信息。</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>5. 侵权投诉</h3>
+      <p>如您认为本平台上的任何内容侵犯了您的合法权益，请提供以下信息并通过邮件联系我们：</p>
+      <ul>
+        <li>您的身份证明及联系方式。</li>
+        <li>涉嫌侵权内容的具体位置（URL）。</li>
+        <li>您对该内容享有的知识产权证明。</li>
+        <li>您的投诉声明和诉求。</li>
+      </ul>
+      <p>我们将在收到有效投诉后 7 个工作日内予以处理和回复。</p>
+
+      <h3>6. 免责声明</h3>
+      <p>本平台提供的所有内容力求准确，但不对内容的完整性、准确性和时效性做出保证。因使用平台内容而产生的任何直接或间接损失，本平台不承担法律责任。</p>
+
+      <h3>7. 联系方式</h3>
+      <p>版权相关事宜请联系：<br>Email: ip@non-heritage.art<br>运营方：DSArt+AI STUDIO</p>
+    `
+  }
+};
+
+function openLegal(type) {
+  const data = legalData[type];
+  if (!data) return;
+  document.getElementById('legal-content').innerHTML =
+    '<h2>' + data.title + '</h2>' +
+    '<div class="legal-date">' + data.date + '</div>' +
+    data.body;
+  document.getElementById('legal-overlay').classList.add('open');
+  document.getElementById('legal-overlay').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeLegal() {
+  document.getElementById('legal-overlay').classList.remove('open');
+  document.getElementById('legal-overlay').setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.getElementById('legal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLegal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLegal();
+});
 
 // ── Custom cursor ──
 const outer = document.getElementById('cursor-outer');
