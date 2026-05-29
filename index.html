@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NON-遗·潮涌东方 | 国潮时尚非遗潮玩</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@400;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --red:   #FF2D20;
+      --cyan:  #00F5FF;
+      --black: #0A0A0A;
+      --ink:   #111111;
+      --white: #F5F5F0;
+      --gray:  #1A1A1A;
+      --muted: #555555;
+      --font-en: 'Bebas Neue', 'Space Grotesk', sans-serif;
+      --font-cn: 'Noto Sans SC', sans-serif;
+      --grid: 8px;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-cn);
+      cursor: none;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── CUSTOM CURSOR ──────────────────────────────────────── */
+    #cursor-outer {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      width: 40px; height: 40px;
+      border: 2px solid var(--cyan);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, border-color .2s, background .1s;
+      mix-blend-mode: exclusion;
+    }
+    #cursor-inner {
+      position: fixed; top: 0; left: 0; z-index: 10000;
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+      transition: transform .08s;
+    }
+    body.cursor-hover #cursor-outer {
+      width: 60px; height: 60px;
+      border-color: var(--red);
+      background: rgba(255,45,32,.08);
+    }
+
+    /* ─── PROGRESS BAR ───────────────────────────────────────── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; z-index: 8888;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--red), var(--cyan));
+      transition: width .1s linear;
+    }
+
+    /* ─── TICKER / MARQUEE ───────────────────────────────────── */
+    #ticker {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+      height: 36px;
+      background: var(--red);
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .ticker-track {
+      display: flex; align-items: center;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+      gap: 0;
+    }
+    .ticker-item {
+      font-family: var(--font-en);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--black);
+      padding: 0 32px;
+    }
+    .ticker-sep { color: var(--cyan); font-size: 18px; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 36px; left: 0; right: 0; z-index: 700;
+      padding: 0 5vw;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(10,10,10,.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,245,255,.12);
+      transition: background .3s;
+    }
+    .nav-logo {
+      font-family: var(--font-en);
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links {
+      display: flex; gap: 36px; align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-en);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,245,240,.65);
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--cyan);
+      transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-btns { display: flex; gap: 12px; }
+    .btn-ghost {
+      font-family: var(--font-en);
+      font-size: 13px; letter-spacing: 2px;
+      padding: 8px 20px;
+      border: 1px solid rgba(245,245,240,.35);
+      color: var(--white);
+      background: transparent;
+      cursor: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-solid {
+      font-family: var(--font-en);
+      font-size: 13px; letter-spacing: 2px;
+      padding: 8px 22px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      cursor: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-solid:hover { background: #e0281a; transform: scale(1.03); }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      padding-top: calc(36px + 64px);
+      display: flex; flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* grid bg */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+    /* noise texture */
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+      z-index: 0; pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      padding: 80px 7vw;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--cyan);
+      padding: 6px 16px;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-family: var(--font-en);
+      margin-bottom: 40px;
+    }
+    .hero-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-title {
+      font-family: var(--font-en);
+      font-size: clamp(72px, 12vw, 168px);
+      line-height: .88;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero-title .solid { color: var(--white); display: block; }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--red);
+      color: transparent;
+      display: block;
+    }
+    .hero-title .cyan-accent { color: var(--cyan); display: block; }
+
+    /* corner decoration */
+    .corner-bracket {
+      position: absolute;
+      width: 28px; height: 28px;
+    }
+    .corner-bracket.tl { top: 0; left: 0; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+    .corner-bracket.br { bottom: 0; right: 0; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red); }
+
+    .hero-sub {
+      font-size: 15px; line-height: 1.7;
+      color: rgba(245,245,240,.55);
+      max-width: 460px;
+      margin-bottom: 48px;
+    }
+
+    /* floating badges */
+    .badge-float {
+      position: absolute;
+      font-family: var(--font-en);
+      letter-spacing: 2px; text-transform: uppercase;
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 2px;
+      animation: float 4s ease-in-out infinite;
+    }
+    .badge-float.b1 {
+      top: 18%; right: 8%;
+      background: var(--red); color: var(--white);
+      animation-delay: 0s;
+    }
+    .badge-float.b2 {
+      top: 38%; right: 14%;
+      border: 1px solid var(--cyan); color: var(--cyan);
+      background: transparent;
+      animation-delay: 1.2s;
+    }
+    .badge-float.b3 {
+      bottom: 22%; right: 6%;
+      background: var(--cyan); color: var(--black);
+      animation-delay: 2.4s;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    /* 3D cards deco */
+    .deco-card {
+      position: absolute;
+      border: 1px solid rgba(0,245,255,.2);
+      background: rgba(0,245,255,.03);
+      transform: perspective(600px) rotateY(-20deg) rotateX(10deg);
+      transition: transform .4s;
+    }
+    .deco-card:hover { transform: perspective(600px) rotateY(-5deg) rotateX(2deg); }
+    .deco-card.dc1 {
+      top: 20%; right: 3%;
+      width: 220px; height: 290px;
+    }
+    .deco-card.dc2 {
+      top: 38%; right: 8%;
+      width: 160px; height: 210px;
+      border-color: rgba(255,45,32,.25);
+      background: rgba(255,45,32,.03);
+      transform: perspective(600px) rotateY(-28deg) rotateX(8deg);
+    }
+
+    /* counters row */
+    .counters {
+      display: flex; gap: 48px;
+      margin-top: 60px;
+    }
+    .counter-item {}
+    .counter-num {
+      font-family: var(--font-en);
+      font-size: 48px; line-height: 1;
+      color: var(--white);
+    }
+    .counter-num span { color: var(--red); }
+    .counter-label {
+      font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .hero-cta { display: flex; gap: 16px; align-items: center; }
+    .btn-primary {
+      font-family: var(--font-en);
+      font-size: 14px; letter-spacing: 3px;
+      padding: 16px 36px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: rgba(255,255,255,.12);
+      transform: skewX(-20deg);
+      transition: left .4s;
+    }
+    .btn-primary:hover { transform: scale(1.04); }
+    .btn-primary:hover::after { left: 150%; }
+    .btn-outline {
+      font-family: var(--font-en);
+      font-size: 14px; letter-spacing: 3px;
+      padding: 15px 35px;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      background: transparent;
+      cursor: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: var(--cyan); color: var(--black); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 7vw;
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+      z-index: 2;
+    }
+    .scroll-line {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      animation: pulse-line 2s infinite;
+    }
+    @keyframes pulse-line { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* ─── SECTION COMMONS ────────────────────────────────────── */
+    section { padding: 120px 7vw; }
+    .section-label {
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      max-width: 80px;
+    }
+    .section-title {
+      font-family: var(--font-en);
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: .92;
+      text-transform: uppercase;
+      margin-bottom: 64px;
+    }
+    .section-title em { color: var(--cyan); font-style: normal; }
+    .section-title s { -webkit-text-stroke: 1px var(--muted); color: transparent; text-decoration: none; }
+
+    /* ─── WORKS GRID ─────────────────────────────────────────── */
+    #works { background: var(--ink); }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 260px;
+      gap: 3px;
+    }
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      background: var(--gray);
+      group: true;
+    }
+    /* span overrides */
+    .work-card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .work-card:nth-child(5) { grid-column: span 2; }
+
+    .work-bg {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .4s;
+      filter: saturate(1.1);
+    }
+    .work-card:hover .work-bg { transform: scale(1.08); filter: saturate(1.4) brightness(.75); }
+
+    .work-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,.92) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+    }
+    .work-card:hover .work-overlay { opacity: 1; }
+
+    .work-cat {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 6px;
+    }
+    .work-name {
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .work-artist {
+      font-size: 12px; color: rgba(245,245,240,.55);
+      margin-bottom: 16px;
+    }
+    .work-arrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red);
+    }
+    .work-arrow svg { transition: transform .2s; }
+    .work-card:hover .work-arrow svg { transform: translateX(6px); }
+
+    /* number badge */
+    .work-num {
+      position: absolute; top: 14px; left: 14px;
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 1px;
+      background: var(--red);
+      color: var(--white);
+      padding: 2px 8px;
+    }
+
+    /* placeholder colorful bgs for cards */
+    .work-card:nth-child(1)  { --ph: #1a0a00; }
+    .work-card:nth-child(2)  { --ph: #001a1a; }
+    .work-card:nth-child(3)  { --ph: #1a0010; }
+    .work-card:nth-child(4)  { --ph: #0a1500; }
+    .work-card:nth-child(5)  { --ph: #1a0005; }
+    .work-card:nth-child(6)  { --ph: #001015; }
+    .work-card:nth-child(7)  { --ph: #180a00; }
+    .work-card:nth-child(8)  { --ph: #00151a; }
+    .work-card:nth-child(9)  { --ph: #1a0a0a; }
+    .work-card:nth-child(10) { --ph: #0a0a1a; }
+    .work-ph {
+      width: 100%; height: 100%;
+      background: var(--ph);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .work-ph-inner {
+      text-align: center;
+    }
+    .work-ph-en {
+      font-family: var(--font-en);
+      font-size: clamp(22px, 4vw, 52px);
+      -webkit-text-stroke: 1px rgba(0,245,255,.3);
+      color: transparent;
+      line-height: 1;
+    }
+    .work-ph-cn {
+      font-size: 13px; font-weight: 700;
+      color: rgba(245,245,240,.4);
+      margin-top: 8px;
+    }
+
+    /* ─── PARTNERS ───────────────────────────────────────────── */
+    #partners { background: var(--black); }
+    .partners-cats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .partner-cat {
+      background: var(--gray);
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .partner-cat:hover { background: #1e1e1e; }
+    .partner-cat::before {
+      content: attr(data-idx);
+      position: absolute; top: -10px; right: 16px;
+      font-family: var(--font-en);
+      font-size: 100px; line-height: 1;
+      font-weight: 900;
+      color: rgba(255,255,255,.03);
+      pointer-events: none;
+    }
+    .pc-icon { font-size: 36px; margin-bottom: 20px; }
+    .pc-title {
+      font-family: var(--font-en);
+      font-size: 22px; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .pc-en {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .pc-desc {
+      font-size: 13px; line-height: 1.8;
+      color: rgba(245,245,240,.5);
+      margin-bottom: 28px;
+    }
+    .pc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pc-tag {
+      font-size: 11px; letter-spacing: 1px;
+      padding: 4px 12px;
+      border: 1px solid rgba(245,245,240,.15);
+      color: rgba(245,245,240,.5);
+      transition: border-color .2s, color .2s;
+    }
+    .partner-cat:hover .pc-tag { border-color: var(--cyan); color: var(--cyan); }
+    .pc-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .pc-bar.red { background: var(--red); }
+    .pc-bar.cyan { background: var(--cyan); }
+    .pc-bar.gradient { background: linear-gradient(90deg, var(--red), var(--cyan)); }
+
+    /* logos grid */
+    .logos-row {
+      display: flex; flex-wrap: wrap;
+      gap: 1px;
+      margin-top: 2px;
+    }
+    .logo-slot {
+      flex: 1 1 160px;
+      height: 80px;
+      background: var(--gray);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en);
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,245,240,.3);
+      transition: background .2s, color .2s;
+      position: relative;
+    }
+    .logo-slot:hover { background: #222; color: var(--white); }
+
+    /* ─── EVENTS / MARQUEE 2 ─────────────────────────────────── */
+    #events {
+      background: var(--red);
+      padding: 0;
+      overflow: hidden;
+      height: 72px;
+      display: flex; align-items: center;
+    }
+    .events-track {
+      display: flex; align-items: center;
+      animation: ticker 22s linear infinite;
+      white-space: nowrap;
+      gap: 0;
+    }
+    .evt-item {
+      font-family: var(--font-en);
+      font-size: 22px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--black);
+      padding: 0 40px;
+    }
+    .evt-sep { color: rgba(10,10,10,.4); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(0,245,255,.08);
+      padding: 80px 7vw 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-en);
+      font-size: 32px; letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .footer-brand-name span { color: var(--red); }
+    .footer-desc {
+      font-size: 13px; line-height: 1.8;
+      color: rgba(245,245,240,.4);
+      max-width: 280px;
+      margin-bottom: 28px;
+    }
+    .footer-social { display: flex; gap: 12px; }
+    .soc-btn {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,245,240,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      cursor: none;
+      transition: border-color .2s, background .2s;
+    }
+    .soc-btn:hover { border-color: var(--cyan); background: rgba(0,245,255,.06); }
+    .footer-col h4 {
+      font-family: var(--font-en);
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li {
+      font-size: 13px; color: rgba(245,245,240,.4);
+      margin-bottom: 12px;
+      cursor: none;
+      transition: color .2s;
+    }
+    .footer-col li:hover { color: var(--cyan); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,245,240,.06);
+      padding-top: 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-size: 12px; letter-spacing: 1px;
+      color: rgba(245,245,240,.25);
+    }
+    .footer-badge {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 5px 14px;
+      border: 1px solid rgba(0,245,255,.2);
+      color: rgba(0,245,255,.5);
+    }
+
+    /* ─── ACTIVITIES ─────────────────────────────────────────── */
+    #activities { background: var(--ink); }
+    .act-filter {
+      display: flex; gap: 0;
+      margin-bottom: 56px;
+    }
+    .act-filter-btn {
+      font-family: var(--font-en);
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 10px 28px;
+      border: 1px solid rgba(245,245,240,.12);
+      color: var(--muted);
+      background: transparent;
+      cursor: none;
+      transition: background .2s, color .2s, border-color .2s;
+      margin-right: -1px;
+    }
+    .act-filter-btn.active,
+    .act-filter-btn:hover {
+      background: var(--red); color: var(--white);
+      border-color: var(--red); z-index: 1;
+    }
+    .act-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .act-card {
+      background: var(--gray);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .act-card:hover { background: #1c1c1c; }
+    .act-card::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 3px; height: 100%;
+    }
+    .act-card.status-upcoming::after { background: var(--cyan); }
+    .act-card.status-ongoing::after  { background: var(--red); }
+    .act-card.status-ended::after    { background: var(--muted); }
+
+    .act-status {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 20px;
+      padding: 4px 12px;
+    }
+    .act-status.upcoming { color: var(--cyan); border: 1px solid rgba(0,245,255,.3); }
+    .act-status.ongoing  { color: var(--red);  border: 1px solid rgba(255,45,32,.35); }
+    .act-status.ended    { color: var(--muted); border: 1px solid rgba(85,85,85,.4); }
+    .act-status .pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .act-status.upcoming .pulse { background: var(--cyan); animation: blink 1.4s infinite; }
+    .act-status.ongoing  .pulse { background: var(--red);  animation: blink 1s infinite; }
+    .act-status.ended    .pulse { background: var(--muted); }
+
+    .act-date {
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .act-title {
+      font-size: 20px; font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .act-loc {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .act-loc svg { flex-shrink: 0; }
+    .act-desc {
+      font-size: 13px; line-height: 1.8;
+      color: rgba(245,245,240,.45);
+      margin-bottom: 24px;
+    }
+    .act-link {
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red);
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: gap .2s;
+    }
+    .act-link:hover { gap: 14px; }
+    .act-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .act-tag {
+      font-size: 10px; letter-spacing: 1px;
+      padding: 3px 10px;
+      background: rgba(255,255,255,.04);
+      color: rgba(245,245,240,.45);
+    }
+    /* partner CTA */
+    .partner-cta-row {
+      margin-top: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+      padding: 40px 48px;
+      border: 1px solid rgba(0,245,255,.12);
+      background: linear-gradient(135deg, rgba(0,245,255,.04) 0%, rgba(255,45,32,.04) 100%);
+    }
+    .partner-cta-text {}
+    .partner-cta-title {
+      font-family: var(--font-en);
+      font-size: 28px; letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .partner-cta-sub {
+      font-size: 13px; color: var(--muted);
+    }
+    .btn-partner {
+      font-family: var(--font-en);
+      font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 16px 36px;
+      background: transparent;
+      border: 2px solid var(--cyan);
+      color: var(--cyan);
+      cursor: none;
+      position: relative; overflow: hidden;
+      transition: color .3s;
+      white-space: nowrap;
+    }
+    .btn-partner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--cyan);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+      z-index: 0;
+    }
+    .btn-partner:hover { color: var(--black); }
+    .btn-partner:hover::before { transform: scaleX(1); }
+    .btn-partner span { position: relative; z-index: 1; }
+
+    @media (max-width: 1024px) {
+      .act-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .act-grid { grid-template-columns: 1fr; }
+      .partner-cta-row { padding: 28px 24px; }
+      .act-filter { flex-wrap: wrap; }
+    }
+
+    /* ─── MODAL ──────────────────────────────────────────────── */
+    #modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    #modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      width: 460px; max-width: 94vw;
+      background: var(--ink);
+      border: 1px solid rgba(0,245,255,.15);
+      padding: 48px 40px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+    }
+    #modal-overlay.open .modal-box { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px;
+      font-size: 22px; color: var(--muted);
+      cursor: none; transition: color .2s;
+    }
+    .modal-close:hover { color: var(--red); }
+    .modal-tabs {
+      display: flex; gap: 0; margin-bottom: 36px;
+      border-bottom: 1px solid rgba(245,245,240,.1);
+    }
+    .modal-tab {
+      font-family: var(--font-en);
+      font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 10px 24px;
+      cursor: none;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color .2s, border-color .2s;
+    }
+    .modal-tab.active { color: var(--white); border-color: var(--red); }
+    .modal-form { display: none; flex-direction: column; gap: 16px; }
+    .modal-form.active { display: flex; }
+    .form-field {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .form-field label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(245,245,240,.1);
+      color: var(--white);
+      padding: 12px 16px;
+      font-size: 14px; font-family: var(--font-cn);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-field input:focus { border-color: var(--cyan); }
+    .form-submit {
+      margin-top: 8px;
+      font-family: var(--font-en);
+      font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 14px;
+      background: var(--red); color: var(--white);
+      border: none; cursor: none;
+      transition: background .2s;
+    }
+    .form-submit:hover { background: #e0281a; }
+    .form-note {
+      font-size: 12px; color: var(--muted);
+      text-align: center; margin-top: 4px;
+    }
+    .modal-title {
+      font-family: var(--font-en);
+      font-size: 28px; letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .modal-sub {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .works-grid { grid-template-columns: repeat(2, 1fr); }
+      .work-card:nth-child(1) { grid-column: span 2; }
+      .work-card:nth-child(5) { grid-column: span 2; }
+      .partners-cats { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .deco-card, .badge-float { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .works-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+      .work-card:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+      .work-card:nth-child(5) { grid-column: span 2; }
+      .counters { flex-wrap: wrap; gap: 28px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .works-grid { grid-template-columns: 1fr; }
+      .work-card:nth-child(1),
+      .work-card:nth-child(5) { grid-column: span 1; }
+      section { padding: 80px 5vw; }
+    }
+
+    /* ─── NOISE OVERLAY ──────────────────────────────────────── */
+    .grain {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      opacity: .022;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+      animation: grain-anim .18s steps(1) infinite;
+    }
+    @keyframes grain-anim {
+      0%{transform:translate(0,0)} 10%{transform:translate(-2%,-3%)} 20%{transform:translate(3%,2%)} 30%{transform:translate(-1%,4%)} 40%{transform:translate(4%,-1%)} 50%{transform:translate(-3%,3%)} 60%{transform:translate(2%,-4%)} 70%{transform:translate(-4%,1%)} 80%{transform:translate(3%,-2%)} 90%{transform:translate(-2%,4%)} 100%{transform:translate(1%,-1%)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Custom cursor -->
+<div id="cursor-outer" aria-hidden="true"></div>
+<div id="cursor-inner" aria-hidden="true"></div>
+
+<!-- Progress bar -->
+<div id="progress-bar" aria-hidden="true"></div>
+
+<!-- ═══════════════ TICKER ═══════════════ -->
+<div id="ticker" role="marquee" aria-label="品牌滚动标语">
+  <div class="ticker-track">
+    <!-- duplicated for seamless loop -->
+    <span class="ticker-item">非遗潮玩</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">NON-遗·潮涌东方</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">INTANGIBLE HERITAGE REBORN</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">国潮时尚</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">街潮解构主义</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">朱砂红 × 电光青 × 墨黑</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">撞色系统</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">非遗潮玩</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">NON-遗·潮涌东方</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">INTANGIBLE HERITAGE REBORN</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">国潮时尚</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">街潮解构主义</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">朱砂红 × 电光青 × 墨黑</span><span class="ticker-sep ticker-item">✦</span>
+    <span class="ticker-item">撞色系统</span><span class="ticker-sep ticker-item">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav id="navbar">
+  <div class="nav-logo">NON<span>-遗</span></div>
+  <ul class="nav-links">
+    <li><a href="#works">作品</a></li>
+    <li><a href="#activities">活动</a></li>
+    <li><a href="#partners">合作</a></li>
+    <li><a href="#">关于</a></li>
+  </ul>
+  <div class="nav-btns">
+    <button class="btn-ghost" onclick="openModal('login')">登录</button>
+    <button class="btn-solid" onclick="openModal('signup')">注册</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <!-- floating deco cards -->
+  <div class="deco-card dc1" aria-hidden="true"></div>
+  <div class="deco-card dc2" aria-hidden="true"></div>
+
+  <!-- floating badges -->
+  <div class="badge-float b1" aria-hidden="true">2026 SEASON</div>
+  <div class="badge-float b2" aria-hidden="true">NON-HERITAGE</div>
+  <div class="badge-float b3" aria-hidden="true">STREET × CRAFT</div>
+
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      LIVE NOW — 非遗潮玩展览进行中
+    </div>
+
+    <h1 class="hero-title" data-aos="fade-up" data-aos-duration="800">
+      <span class="outline">NON-遗</span>
+      <span class="solid">潮涌</span>
+      <span class="cyan-accent">东方</span>
+    </h1>
+
+    <p class="hero-sub" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">
+      用撞色解构主义打破传统非遗的「博物馆感」——
+      朱砂红×电光青×墨黑，融入街潮排版语言，
+      让非遗真正「活」起来。
+    </p>
+
+    <div class="hero-cta" data-aos="fade-up" data-aos-delay="280" data-aos-duration="700">
+      <a href="#works" class="btn-primary">探索作品 →</a>
+      <a href="#partners" class="btn-outline">合作名录</a>
+    </div>
+
+    <div class="counters" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
+      <div class="counter-item">
+        <div class="counter-num"><span id="c1">0</span>+</div>
+        <div class="counter-label">非遗艺术家</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-num"><span id="c2">0</span></div>
+        <div class="counter-label">展出作品</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-num"><span id="c3">0</span>K</div>
+        <div class="counter-label">观众触达</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-num"><span id="c4">0</span></div>
+        <div class="counter-label">合作品牌</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-line"></div>
+    SCROLL TO EXPLORE
+  </div>
+</section>
+
+<!-- ═══════════════ WORKS ═══════════════ -->
+<section id="works">
+  <div class="section-label">WORKS</div>
+  <h2 class="section-title" data-aos="fade-up">
+    <em>作品</em><br>
+    <s>GALLERY</s>
+  </h2>
+
+  <div class="works-grid">
+
+    <!-- Card 1 – spans 2col × 2row -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">LACQUER<br>CRAFT</div>
+          <div class="work-ph-cn">漆艺·熔金</div>
+        </div>
+      </div>
+      <span class="work-num">01</span>
+      <div class="work-overlay">
+        <div class="work-cat">漆艺 · Lacquerware</div>
+        <div class="work-name">熔金——当代漆器系列</div>
+        <div class="work-artist">艺术家：陈月华</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">BLUE &<br>WHITE</div>
+          <div class="work-ph-cn">青花·量子</div>
+        </div>
+      </div>
+      <span class="work-num">02</span>
+      <div class="work-overlay">
+        <div class="work-cat">瓷器 · Porcelain</div>
+        <div class="work-name">量子青花</div>
+        <div class="work-artist">艺术家：李朝阳</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">BATIK<br>WAVE</div>
+          <div class="work-ph-cn">蜡染·浪潮</div>
+        </div>
+      </div>
+      <span class="work-num">03</span>
+      <div class="work-overlay">
+        <div class="work-cat">蜡染 · Batik</div>
+        <div class="work-name">浪潮蜡染·解构系列</div>
+        <div class="work-artist">艺术家：苗银凤</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">PAPER<br>CUT</div>
+          <div class="work-ph-cn">剪纸·电光</div>
+        </div>
+      </div>
+      <span class="work-num">04</span>
+      <div class="work-overlay">
+        <div class="work-cat">剪纸 · Papercutting</div>
+        <div class="work-name">电光剪纸 Vol.3</div>
+        <div class="work-artist">艺术家：张素云</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 5 – spans 2col -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">SHADOW<br>PUPPET</div>
+          <div class="work-ph-cn">皮影·赛博</div>
+        </div>
+      </div>
+      <span class="work-num">05</span>
+      <div class="work-overlay">
+        <div class="work-cat">皮影 · Shadow Puppet</div>
+        <div class="work-name">赛博皮影·新神话</div>
+        <div class="work-artist">艺术家：王大山</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">SILK<br>WEAVE</div>
+          <div class="work-ph-cn">蜀锦·未来</div>
+        </div>
+      </div>
+      <span class="work-num">06</span>
+      <div class="work-overlay">
+        <div class="work-cat">蜀锦 · Shu Brocade</div>
+        <div class="work-name">未来蜀锦·全息系列</div>
+        <div class="work-artist">艺术家：刘锦绣</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">KESI<br>WEAVE</div>
+          <div class="work-ph-cn">缂丝·躁动</div>
+        </div>
+      </div>
+      <span class="work-num">07</span>
+      <div class="work-overlay">
+        <div class="work-cat">缂丝 · Kesi Weaving</div>
+        <div class="work-name">躁动缂丝·朋克版</div>
+        <div class="work-artist">艺术家：周丝竹</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">CLAY<br>ART</div>
+          <div class="work-ph-cn">泥塑·破壁</div>
+        </div>
+      </div>
+      <span class="work-num">08</span>
+      <div class="work-overlay">
+        <div class="work-cat">泥塑 · Clay Sculpture</div>
+        <div class="work-name">破壁泥塑·异形系列</div>
+        <div class="work-artist">艺术家：赵土生</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">WOOD<br>BLOCK</div>
+          <div class="work-ph-cn">木版·噪声</div>
+        </div>
+      </div>
+      <span class="work-num">09</span>
+      <div class="work-overlay">
+        <div class="work-cat">木版画 · Woodblock</div>
+        <div class="work-name">噪声木版·信号系列</div>
+        <div class="work-artist">艺术家：孙刻石</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="work-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="work-ph">
+        <div class="work-ph-inner">
+          <div class="work-ph-en">BRONZE<br>CAST</div>
+          <div class="work-ph-cn">铜铸·混沌</div>
+        </div>
+      </div>
+      <span class="work-num">10</span>
+      <div class="work-overlay">
+        <div class="work-cat">铸铜 · Bronze</div>
+        <div class="work-name">混沌铜铸·原初系列</div>
+        <div class="work-artist">艺术家：铁工坊</div>
+        <a href="#" class="work-arrow">查看详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+  </div><!-- /works-grid -->
+</section>
+
+<!-- ═══════════════ EVENTS MARQUEE 2 ═══════════════ -->
+<div id="events" aria-hidden="true">
+  <div class="events-track">
+    <span class="evt-item">2026 SUMMER SHOW</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">东方非遗展览</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">OPEN CALL NOW</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">街潮 × 非遗</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">NON-遗·潮涌东方</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">2026 SUMMER SHOW</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">东方非遗展览</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">OPEN CALL NOW</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">街潮 × 非遗</span><span class="evt-sep evt-item">◈</span>
+    <span class="evt-item">NON-遗·潮涌东方</span><span class="evt-sep evt-item">◈</span>
+  </div>
+</div>
+
+<!-- ═══════════════ ACTIVITIES ═══════════════ -->
+<section id="activities">
+  <div class="section-label">ACTIVITIES</div>
+  <h2 class="section-title" data-aos="fade-up">
+    活动<em>回顾</em><br>
+    <s>ARCHIVE</s>
+  </h2>
+
+  <!-- Filter tabs -->
+  <div class="act-filter" data-aos="fade-up" data-aos-delay="80">
+    <button class="act-filter-btn active" data-filter="all" onclick="filterAct(this,'all')">全部 ALL</button>
+    <button class="act-filter-btn" data-filter="upcoming" onclick="filterAct(this,'upcoming')">即将开幕</button>
+    <button class="act-filter-btn" data-filter="ongoing"  onclick="filterAct(this,'ongoing')">进行中</button>
+    <button class="act-filter-btn" data-filter="ended"    onclick="filterAct(this,'ended')">已结束</button>
+  </div>
+
+  <div class="act-grid">
+
+    <!-- 即将开幕 -->
+    <div class="act-card status-upcoming" data-status="upcoming" data-aos="fade-up" data-aos-delay="0">
+      <div class="act-status upcoming"><span class="pulse"></span>即将开幕</div>
+      <div class="act-date">2026 · 07 · 18 — 08 · 31</div>
+      <div class="act-title">潮涌东方·夏日非遗展</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        北京 · 东方艺术中心 B1 展厅
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">漆艺</span>
+        <span class="act-tag">蜀锦</span>
+        <span class="act-tag">皮影</span>
+        <span class="act-tag">互动装置</span>
+      </div>
+      <div class="act-desc">汇集 12 位非遗传承人与 8 家潮流品牌，构建沉浸式夏日展览体验，开放公众免费参观与工坊互动。</div>
+      <a href="#" class="act-link">预约参观 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+    <!-- 即将开幕 -->
+    <div class="act-card status-upcoming" data-status="upcoming" data-aos="fade-up" data-aos-delay="80">
+      <div class="act-status upcoming"><span class="pulse"></span>即将开幕</div>
+      <div class="act-date">2026 · 08 · 01 — 08 · 03</div>
+      <div class="act-title">非遗大师工坊开放日</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        上海 · 新天地创意工坊
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">工坊参观</span>
+        <span class="act-tag">技艺体验</span>
+        <span class="act-tag">限定周边</span>
+      </div>
+      <div class="act-desc">三日工坊开放，国家级传承人现场演示，观众可亲手体验蜡染、剪纸、泥塑等传统技艺。</div>
+      <a href="#" class="act-link">了解详情 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+    <!-- 进行中 -->
+    <div class="act-card status-ongoing" data-status="ongoing" data-aos="fade-up" data-aos-delay="160">
+      <div class="act-status ongoing"><span class="pulse"></span>进行中</div>
+      <div class="act-date">2026 · 05 · 01 — 07 · 15</div>
+      <div class="act-title">街潮 × 非遗联名快闪</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        全国 · 6 大城市巡回
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">快闪</span>
+        <span class="act-tag">潮流联名</span>
+        <span class="act-tag">限量发售</span>
+        <span class="act-tag">巡回</span>
+      </div>
+      <div class="act-desc">携手 6 个潮流品牌推出限定联名系列，在北京、上海、成都、广州、杭州、西安同步快闪展售。</div>
+      <a href="#" class="act-link">查看城市 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+    <!-- 已结束 -->
+    <div class="act-card status-ended" data-status="ended" data-aos="fade-up" data-aos-delay="0">
+      <div class="act-status ended"><span class="pulse"></span>已结束</div>
+      <div class="act-date">2026 · 03 · 15 — 04 · 30</div>
+      <div class="act-title">NON-遗首展·破晓</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        北京 · 798 艺术区 D07 空间
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">首展</span>
+        <span class="act-tag">瓷器</span>
+        <span class="act-tag">漆艺</span>
+        <span class="act-tag">已落幕</span>
+      </div>
+      <div class="act-desc">品牌首个独立展览，汇聚 8 位艺术家，累计吸引逾 1.2 万名观众，完成品牌首次公众亮相。</div>
+      <a href="#" class="act-link">查看回顾 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+    <!-- 已结束 -->
+    <div class="act-card status-ended" data-status="ended" data-aos="fade-up" data-aos-delay="80">
+      <div class="act-status ended"><span class="pulse"></span>已结束</div>
+      <div class="act-date">2025 · 11 · 01 — 12 · 20</div>
+      <div class="act-title">传承者·冬日群展</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        上海 · M50 创意园 12 号楼
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">群展</span>
+        <span class="act-tag">缂丝</span>
+        <span class="act-tag">木版画</span>
+        <span class="act-tag">2025</span>
+      </div>
+      <div class="act-desc">跨越 50 天的冬日群展，15 位非遗艺术家携全新创作亮相，探索传统技艺与当代生活美学的边界。</div>
+      <a href="#" class="act-link">查看回顾 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+    <!-- 已结束 -->
+    <div class="act-card status-ended" data-status="ended" data-aos="fade-up" data-aos-delay="160">
+      <div class="act-status ended"><span class="pulse"></span>已结束</div>
+      <div class="act-date">2025 · 09 · 08 — 09 · 30</div>
+      <div class="act-title">国潮研讨·技艺与未来</div>
+      <div class="act-loc">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+        北京 · 中央美术学院报告厅
+      </div>
+      <div class="act-tag-row">
+        <span class="act-tag">论坛</span>
+        <span class="act-tag">研讨</span>
+        <span class="act-tag">学术</span>
+        <span class="act-tag">2025</span>
+      </div>
+      <div class="act-desc">汇聚 20+ 位非遗学者、设计师与品牌创始人，围绕「技艺如何融入当代生活」展开两日深度研讨。</div>
+      <a href="#" class="act-link">查看回顾 <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="#FF2D20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+
+  </div><!-- /act-grid -->
+</section>
+
+<!-- ═══════════════ PARTNERS ═══════════════ -->
+<section id="partners">
+  <div class="section-label">PARTNERS</div>
+  <h2 class="section-title" data-aos="fade-up">
+    合作<em>名录</em><br>
+    <s>COLLAB</s>
+  </h2>
+
+  <div class="partners-cats">
+
+    <div class="partner-cat" data-idx="01" data-aos="fade-up" data-aos-delay="0">
+      <div class="pc-bar red"></div>
+      <div class="pc-icon">🎨</div>
+      <div class="pc-title">艺术学院</div>
+      <div class="pc-en">ART ACADEMY</div>
+      <div class="pc-desc">
+        汇聚各大艺术学院非遗创作力量，将学术研究与当代设计语言融合，
+        以年轻视角重新诠释传统技艺。
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag">中央美术学院</span>
+        <span class="pc-tag">清华美院</span>
+        <span class="pc-tag">中国美院</span>
+        <span class="pc-tag">北京服装学院</span>
+        <span class="pc-tag">+ 更多</span>
+      </div>
+    </div>
+
+    <div class="partner-cat" data-idx="02" data-aos="fade-up" data-aos-delay="100">
+      <div class="pc-bar cyan"></div>
+      <div class="pc-icon">🏺</div>
+      <div class="pc-title">非遗大师</div>
+      <div class="pc-en">HERITAGE MASTER</div>
+      <div class="pc-desc">
+        携手国家级、省级非遗传承人，打开工坊大门，
+        让古老技艺在镜头前流动，在数字场域中延续。
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag">国家级传承人</span>
+        <span class="pc-tag">省级传承人</span>
+        <span class="pc-tag">技艺现场直播</span>
+        <span class="pc-tag">工坊开放日</span>
+      </div>
+    </div>
+
+    <div class="partner-cat" data-idx="03" data-aos="fade-up" data-aos-delay="200">
+      <div class="pc-bar gradient"></div>
+      <div class="pc-icon">🔥</div>
+      <div class="pc-title">潮流玩家</div>
+      <div class="pc-en">STREET COLLAB</div>
+      <div class="pc-desc">
+        与潮流品牌、买手店、设计师及 KOL 共创国潮内容，
+        打通从工坊到街头的最后一公里。
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag">潮流品牌</span>
+        <span class="pc-tag">买手店</span>
+        <span class="pc-tag">独立设计师</span>
+        <span class="pc-tag">创意 KOL</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- logo slots -->
+  <div class="logos-row" data-aos="fade-up" data-aos-delay="80">
+    <div class="logo-slot">BRAND 01</div>
+    <div class="logo-slot">BRAND 02</div>
+    <div class="logo-slot">BRAND 03</div>
+    <div class="logo-slot">BRAND 04</div>
+    <div class="logo-slot">BRAND 05</div>
+    <div class="logo-slot">BRAND 06</div>
+    <div class="logo-slot">BRAND 07</div>
+    <div class="logo-slot">BRAND 08</div>
+  </div><!-- /logos-row -->
+
+  <!-- 成为合作伙伴 CTA -->
+  <div class="partner-cta-row" data-aos="fade-up" data-aos-delay="100">
+    <div class="partner-cta-text">
+      <div class="partner-cta-title">加入我们的生态</div>
+      <div class="partner-cta-sub">无论你是艺术机构、非遗大师、潮流品牌还是创意个人，都欢迎共创国潮新语境</div>
+    </div>
+    <button class="btn-partner" onclick="openModal('signup')">
+      <span>成为合作伙伴 PARTNER WITH US →</span>
+    </button>
+  </div>
+
+</section>
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">NON<span>-遗</span></div>
+      <div class="footer-desc">
+        以撞色解构主义打破「博物馆感」，
+        融合街潮排版语言与非遗技艺，
+        让传统文化真正活起来。
+      </div>
+      <div class="footer-social">
+        <div class="soc-btn" title="微博">微</div>
+        <div class="soc-btn" title="微信">信</div>
+        <div class="soc-btn" title="小红书">红</div>
+        <div class="soc-btn" title="抖音">音</div>
+        <div class="soc-btn" title="B站">B</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li>作品展区</li>
+        <li>合作名录</li>
+        <li>活动归档</li>
+        <li>艺术家</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li>关于我们</li>
+        <li>媒体资料包</li>
+        <li>商务合作</li>
+        <li>联系我们</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li>使用条款</li>
+        <li>隐私政策</li>
+        <li>版权声明</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 NON-遗·潮涌东方 · DSArt+AI STUDIO · All rights reserved.</div>
+    <div class="footer-badge">INTANGIBLE HERITAGE REBORN</div>
+  </div>
+</footer>
+
+<!-- ═══════════════ MODAL ═══════════════ -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
+
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">LOGIN</button>
+      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">SIGN UP</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="form-login" class="modal-form active">
+      <div>
+        <div class="modal-title" id="modal-title-text">登录</div>
+        <div class="modal-sub">欢迎回到非遗潮玩世界</div>
+      </div>
+      <div class="form-field">
+        <label for="login-email">邮箱 / EMAIL</label>
+        <input type="email" id="login-email" placeholder="your@email.com" />
+      </div>
+      <div class="form-field">
+        <label for="login-pwd">密码 / PASSWORD</label>
+        <input type="password" id="login-pwd" placeholder="••••••••" />
+      </div>
+      <button class="form-submit">登录 LOGIN →</button>
+      <div class="form-note">还没有账号？<span onclick="switchTab('signup')" style="color:var(--cyan);cursor:pointer">立即注册</span></div>
+    </div>
+
+    <!-- SIGN UP -->
+    <div id="form-signup" class="modal-form">
+      <div>
+        <div class="modal-title">注册</div>
+        <div class="modal-sub">加入非遗潮玩社区</div>
+      </div>
+      <div class="form-field">
+        <label for="su-name">昵称 / NICKNAME</label>
+        <input type="text" id="su-name" placeholder="你的潮流称号" />
+      </div>
+      <div class="form-field">
+        <label for="su-email">邮箱 / EMAIL</label>
+        <input type="email" id="su-email" placeholder="your@email.com" />
+      </div>
+      <div class="form-field">
+        <label for="su-pwd">密码 / PASSWORD</label>
+        <input type="password" id="su-pwd" placeholder="至少 8 位" />
+      </div>
+      <button class="form-submit">注册 SIGN UP →</button>
+      <div class="form-note">已有账号？<span onclick="switchTab('login')" style="color:var(--cyan);cursor:pointer">直接登录</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+// ── AOS init ──
+AOS.init({ once: true, offset: 80, duration: 700, easing: 'ease-out-cubic' });
+
+// ── Custom cursor ──
+const outer = document.getElementById('cursor-outer');
+const inner = document.getElementById('cursor-inner');
+let mx = 0, my = 0, ox = 0, oy = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  inner.style.left = mx + 'px';
+  inner.style.top  = my + 'px';
+});
+(function raf() {
+  ox += (mx - ox) * 0.12;
+  oy += (my - oy) * 0.12;
+  outer.style.left = ox + 'px';
+  outer.style.top  = oy + 'px';
+  requestAnimationFrame(raf);
+})();
+document.querySelectorAll('a, button, .work-card, .partner-cat, .logo-slot, .soc-btn, .modal-close, .modal-tab, .form-submit, [onclick]')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+// ── Progress bar ──
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  bar.style.width = pct + '%';
+});
+
+// ── Counter animation ──
+function animCount(id, target, suffix, duration) {
+  const el = document.getElementById(id);
+  let start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    const prog = Math.min((ts - start) / duration, 1);
+    el.textContent = Math.floor(prog * target);
+    if (prog < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+const heroObs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    animCount('c1', 86, '+', 1800);
+    animCount('c2', 240, '', 2000);
+    animCount('c3', 120, 'K', 2200);
+    animCount('c4', 32, '', 1600);
+    heroObs.disconnect();
+  }
+}, { threshold: 0.3 });
+heroObs.observe(document.getElementById('hero'));
+
+// ── Modal ──
+function openModal(tab) {
+  document.getElementById('modal-overlay').classList.add('open');
+  switchTab(tab || 'login');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function switchTab(tab) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.modal-form').forEach(f => f.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('form-' + tab).classList.add('active');
+}
+// close on overlay click
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+// ESC to close
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── Navbar bg on scroll ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.background = window.scrollY > 60
+    ? 'rgba(10,10,10,.95)'
+    : 'rgba(10,10,10,.72)';
+});
+
+// ── Activity filter ──
+function filterAct(btn, status) {
+  document.querySelectorAll('.act-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.act-card').forEach(card => {
+    const show = status === 'all' || card.dataset.status === status;
+    card.style.display = show ? '' : 'none';
+  });
+}
+// cursor hover extras
+document.querySelectorAll('.act-filter-btn, .btn-partner, .act-link')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+</script>
+</body>
+</html>
