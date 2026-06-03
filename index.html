@@ -883,6 +883,194 @@
       color: var(--muted);
     }
 
+    /* ─── FLASH SALE ────────────────────────────────────────── */
+    #flash { background: var(--ink); }
+    .flash-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+      margin-bottom: 56px;
+    }
+    .flash-countdown {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .cd-unit {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--gray);
+      padding: 12px 18px;
+      min-width: 64px;
+    }
+    .cd-num {
+      font-family: var(--font-en);
+      font-size: 32px; line-height: 1;
+      color: var(--red);
+    }
+    .cd-label {
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .cd-sep {
+      font-family: var(--font-en);
+      font-size: 28px; color: var(--muted);
+      margin: 0 2px;
+      align-self: flex-start; padding-top: 8px;
+    }
+
+    .flash-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .flash-card {
+      background: var(--gray);
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      transition: background .3s;
+    }
+    .flash-card:hover { background: #1e1e1e; }
+    .flash-img {
+      width: 100%; height: 260px;
+      object-fit: cover;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .flash-img-ph {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .flash-card:hover .flash-img-ph { transform: scale(1.06); }
+    .flash-img-ph-en {
+      font-family: var(--font-en);
+      font-size: clamp(28px, 4vw, 56px);
+      -webkit-text-stroke: 1px rgba(0,245,255,.25);
+      color: transparent;
+      line-height: 1; text-align: center;
+    }
+
+    /* 限量标签 */
+    .flash-badge {
+      position: absolute; top: 14px; left: 0;
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      background: var(--red); color: var(--white);
+      padding: 4px 14px 4px 10px;
+    }
+    .flash-badge.sold-out {
+      background: var(--muted);
+    }
+    .flash-badge.cyan-badge {
+      background: var(--cyan); color: var(--black);
+    }
+
+    /* 进度条 */
+    .flash-progress-wrap {
+      height: 3px; background: rgba(255,255,255,.08);
+      margin: 14px 0 6px;
+    }
+    .flash-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--cyan));
+      transition: width 1s ease;
+    }
+    .flash-progress-text {
+      font-size: 11px; color: var(--muted);
+      display: flex; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .flash-body {
+      padding: 24px 28px 32px;
+    }
+    .flash-cat {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 6px;
+    }
+    .flash-name {
+      font-size: 18px; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px; line-height: 1.3;
+    }
+    .flash-desc {
+      font-size: 12px; line-height: 1.8;
+      color: rgba(245,245,240,.45);
+      margin-bottom: 16px;
+    }
+    .flash-price-row {
+      display: flex; align-items: baseline; gap: 12px;
+      margin-bottom: 6px;
+    }
+    .flash-price {
+      font-family: var(--font-en);
+      font-size: 26px; color: var(--red);
+    }
+    .flash-price-orig {
+      font-size: 13px; color: var(--muted);
+      text-decoration: line-through;
+    }
+    .flash-discount {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 2px;
+      background: var(--red); color: var(--white);
+      padding: 2px 8px;
+    }
+
+    .flash-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 6px;
+    }
+    .flash-city {
+      font-size: 11px; color: var(--muted);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .btn-flash {
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 9px 20px;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      background: transparent;
+      cursor: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-flash:hover { background: var(--cyan); color: var(--black); }
+    .btn-flash.disabled {
+      border-color: var(--muted); color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* 快闪底部 CTA */
+    .flash-cta {
+      margin-top: 2px;
+      background: var(--black);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+      border-top: 2px solid var(--red);
+    }
+    .flash-cta-text {
+      font-family: var(--font-en);
+      font-size: 20px; letter-spacing: 1px;
+      color: var(--white);
+    }
+    .flash-cta-text em { color: var(--red); font-style: normal; }
+    .flash-cta-sub {
+      font-size: 12px; color: var(--muted);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 1024px) {
+      .flash-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .flash-grid { grid-template-columns: 1fr; }
+      .flash-cta { padding: 28px 24px; }
+      .flash-header { flex-direction: column; align-items: flex-start; }
+    }
+
     /* partner CTA */
     .partner-cta-row {
       margin-top: 56px;
@@ -1290,6 +1478,247 @@
     </div>
     <button class="btn-partner" onclick="openModal('signup')">
       <span>成为合作伙伴 PARTNER WITH US →</span>
+    </button>
+  </div>
+
+</section>
+
+<!-- ═══════════════ FLASH POP-UP ═══════════════ -->
+<section id="flash">
+  <div class="section-label">FLASH POP-UP</div>
+  <div class="flash-header" data-aos="fade-up">
+    <h2 class="section-title" style="margin-bottom:0">
+      商业<em>快闪</em><br>
+      <s>POP-UP STORE</s>
+    </h2>
+    <!-- 倒计时 -->
+    <div class="flash-countdown" id="flashCountdown">
+      <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">DAYS</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">HRS</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">MIN</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">SEC</div></div>
+    </div>
+  </div>
+
+  <div class="flash-grid">
+
+    <!-- 快闪 1 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="flash-img" style="background: linear-gradient(135deg,#1a0500 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">LACQUER<br>DROP</div>
+        </div>
+      </div>
+      <span class="flash-badge cyan-badge">OPEN NOW</span>
+      <div class="flash-body">
+        <div class="flash-cat">漆艺 · POP-UP</div>
+        <div class="flash-name">熔金漆器·限定联名款</div>
+        <div class="flash-desc">与潮流品牌 RÊVE 联名，漆艺工艺与街潮美学结合，限量 80 件，含证书与艺术家签名。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥2,800</span>
+          <span class="flash-price-orig">¥3,600</span>
+          <span class="flash-discount">78折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:73%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售 58/80 件</span>
+          <span style="color:var(--red)">仅剩 22 件</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            北京 · 三里屯
+          </div>
+          <button class="btn-flash" onclick="openModal('signup')">立即购买 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快闪 2 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="flash-img" style="background: linear-gradient(135deg,#001a1a 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">SHADOW<br>BOX</div>
+        </div>
+      </div>
+      <span class="flash-badge">限量发售</span>
+      <div class="flash-body">
+        <div class="flash-cat">皮影 · 潮玩</div>
+        <div class="flash-name">赛博皮影·可动手办</div>
+        <div class="flash-desc">将传统皮影造型立体化，ABS+透明亚克力材质，赛博霓虹上色，可拆装关节，限量 120 套。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥560</span>
+          <span class="flash-price-orig">¥720</span>
+          <span class="flash-discount">78折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:45%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售 54/120 件</span>
+          <span>66 件在售</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            上海 · 新天地
+          </div>
+          <button class="btn-flash" onclick="openModal('signup')">立即购买 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快闪 3 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="flash-img" style="background: linear-gradient(135deg,#10001a 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">BATIK<br>TEE</div>
+        </div>
+      </div>
+      <span class="flash-badge">快闪专供</span>
+      <div class="flash-body">
+        <div class="flash-cat">蜡染 · 服饰</div>
+        <div class="flash-name">浪潮蜡染·解构T恤</div>
+        <div class="flash-desc">苗族天然植物蜡染工艺，结合解构剪裁，四色可选，每款限量 60 件，无回头补货。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥480</span>
+          <span class="flash-price-orig">¥680</span>
+          <span class="flash-discount">71折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:88%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售 211/240 件</span>
+          <span style="color:var(--red)">仅剩 29 件</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            成都 · 太古里
+          </div>
+          <button class="btn-flash" onclick="openModal('signup')">立即购买 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快闪 4 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="flash-img" style="background: linear-gradient(135deg,#001505 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">KESI<br>PATCH</div>
+        </div>
+      </div>
+      <span class="flash-badge">线上同步</span>
+      <div class="flash-body">
+        <div class="flash-cat">缂丝 · 配件</div>
+        <div class="flash-name">躁动缂丝·胸章套组</div>
+        <div class="flash-desc">缂丝工艺制作，内含 5 枚不同图样胸章，朋克风金属底托，礼盒包装，收藏级品质。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥320</span>
+          <span class="flash-price-orig">¥420</span>
+          <span class="flash-discount">76折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:100%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售罄 200/200 件</span>
+          <span style="color:var(--muted)">补货待定</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            线上 · 全国发货
+          </div>
+          <button class="btn-flash disabled">已售罄</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快闪 5 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="flash-img" style="background: linear-gradient(135deg,#0a1500 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">CLAY<br>FIGURE</div>
+        </div>
+      </div>
+      <span class="flash-badge cyan-badge">新品上线</span>
+      <div class="flash-body">
+        <div class="flash-cat">泥塑 · 雕塑</div>
+        <div class="flash-name">破壁泥塑·小尺寸原作</div>
+        <div class="flash-desc">艺术家手工原作，非机压复制品，每件附亲笔证书，限量 30 件独立编号。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥1,680</span>
+          <span class="flash-price-orig">¥2,200</span>
+          <span class="flash-discount">76折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:33%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售 10/30 件</span>
+          <span>20 件在售</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            广州 · K11 购物中心
+          </div>
+          <button class="btn-flash" onclick="openModal('signup')">立即购买 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快闪 6 -->
+    <div class="flash-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="flash-img" style="background: linear-gradient(135deg,#1a0010 0%,#0a0a0a 100%);">
+        <div class="flash-img-ph">
+          <div class="flash-img-ph-en">BLUE<br>WHITE</div>
+        </div>
+      </div>
+      <span class="flash-badge">限时48H</span>
+      <div class="flash-body">
+        <div class="flash-cat">青花 · 器皿</div>
+        <div class="flash-name">量子青花·日常茶具组</div>
+        <div class="flash-desc">量子图案青花手绘，一壶四杯礼盒装，赠定制帆布袋，限时 48 小时闪购，到期恢复原价。</div>
+        <div class="flash-price-row">
+          <span class="flash-price">¥980</span>
+          <span class="flash-price-orig">¥1,480</span>
+          <span class="flash-discount">66折</span>
+        </div>
+        <div class="flash-progress-wrap">
+          <div class="flash-progress-bar" style="width:60%"></div>
+        </div>
+        <div class="flash-progress-text">
+          <span>已售 60/100 件</span>
+          <span>40 件在售</span>
+        </div>
+        <div class="flash-footer">
+          <div class="flash-city">
+            <svg width="10" height="12" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z" fill="#555"/></svg>
+            杭州 · 西湖旗舰店
+          </div>
+          <button class="btn-flash" onclick="openModal('signup')">立即购买 →</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /flash-grid -->
+
+  <!-- 底部 CTA -->
+  <div class="flash-cta" data-aos="fade-up" data-aos-delay="80">
+    <div>
+      <div class="flash-cta-text">想在你的城市开一场 <em>NON</em> 快闪？</div>
+      <div class="flash-cta-sub">覆盖品牌联名、展售结合、工坊体验等多种快闪形式，欢迎商务洽谈</div>
+    </div>
+    <button class="btn-partner" onclick="openModal('signup')">
+      <span>申请城市快闪 APPLY →</span>
     </button>
   </div>
 
@@ -2038,6 +2467,29 @@ document.querySelectorAll('.act-filter-btn, .btn-partner, .act-link')
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
+// ── Flash countdown ──
+(function(){
+  const end = new Date('2026-08-31T23:59:59').getTime();
+  function tick() {
+    const now = Date.now();
+    const diff = Math.max(0, end - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2, '0');
+    const el = id => document.getElementById(id);
+    if (el('cd-d')) {
+      el('cd-d').textContent = pad(d);
+      el('cd-h').textContent = pad(h);
+      el('cd-m').textContent = pad(m);
+      el('cd-s').textContent = pad(s);
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
 // reviews infinite scroll — clone track for seamless loop
 (function(){
   const track = document.getElementById('reviewsTrack');
