@@ -1042,6 +1042,63 @@
       pointer-events: none;
     }
 
+    /* 商业中心快闪展示卡片 */
+    .flash-mall-card {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 2px;
+      background: var(--gray);
+      margin-bottom: 2px;
+      overflow: hidden;
+    }
+    .flash-mall-img {
+      min-height: 340px;
+      background: linear-gradient(135deg, #0d0020 0%, #001a10 50%, #0a0a0a 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .flash-mall-img-en {
+      font-family: var(--font-en);
+      font-size: clamp(32px, 5vw, 72px);
+      -webkit-text-stroke: 1px rgba(0,245,255,.3);
+      color: transparent;
+      line-height: 1; text-align: center;
+      pointer-events: none;
+    }
+    .flash-mall-body {
+      padding: 40px 48px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .flash-mall-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 20px 0;
+    }
+    .flash-mall-tag {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 2px;
+      border: 1px solid rgba(0,245,255,.35);
+      color: var(--cyan);
+      padding: 4px 12px;
+    }
+    .flash-mall-cities {
+      display: flex; flex-wrap: wrap; gap: 16px 28px;
+      margin-top: 4px;
+    }
+    .flash-mall-city-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: rgba(245,245,240,.55);
+    }
+    .flash-mall-city-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .flash-mall-card { grid-template-columns: 1fr; }
+      .flash-mall-img { min-height: 200px; }
+      .flash-mall-body { padding: 28px 24px; }
+    }
+
     /* 快闪底部 CTA */
     .flash-cta {
       margin-top: 2px;
@@ -1504,6 +1561,47 @@
   </div>
 
   
+
+  <!-- 商业中心快闪展示 -->
+  <div class="flash-mall-card" data-aos="fade-up">
+    <div class="flash-mall-img">
+      <div class="flash-mall-img-en">SHOPPING<br>MALL<br>POP-UP</div>
+      <span class="flash-badge cyan-badge" style="position:absolute;top:20px;left:0;">商业中心专区</span>
+    </div>
+    <div class="flash-mall-body">
+      <div class="flash-cat">商业中心 · 快闪展示</div>
+      <div class="flash-name" style="font-size:22px;">NON-遗界·商业中心快闪展示</div>
+      <div class="flash-desc" style="max-width:600px;">
+        与各大商业中心合作，将非遗手艺人、潮流艺术家、限定商品集合呈现于同一空间。互动体验、艺术装置、限量发售同步进行，打造沉浸式城市文化事件。
+      </div>
+      <div class="flash-mall-tags">
+        <span class="flash-mall-tag">沉浸体验</span>
+        <span class="flash-mall-tag">艺术装置</span>
+        <span class="flash-mall-tag">限量发售</span>
+        <span class="flash-mall-tag">品牌联名</span>
+        <span class="flash-mall-tag">工坊互动</span>
+      </div>
+      <div class="flash-mall-cities">
+        <div class="flash-mall-city-item">
+          <div class="flash-mall-city-dot" style="background:var(--cyan)"></div>
+          <span>北京 · 三里屯 Village</span>
+        </div>
+        <div class="flash-mall-city-item">
+          <div class="flash-mall-city-dot" style="background:var(--red)"></div>
+          <span>上海 · 新天地广场</span>
+        </div>
+        <div class="flash-mall-city-item">
+          <div class="flash-mall-city-dot" style="background:var(--cyan)"></div>
+          <span>成都 · 太古里</span>
+        </div>
+        <div class="flash-mall-city-item">
+          <div class="flash-mall-city-dot" style="background:var(--muted)"></div>
+          <span>更多城市 招募中</span>
+        </div>
+      </div>
+      <button class="btn-flash" style="margin-top:28px;" onclick="openModal('signup')">申请合作场地 →</button>
+    </div>
+  </div>
 
   <!-- 底部 CTA -->
   <div class="flash-cta" data-aos="fade-up" data-aos-delay="80">
