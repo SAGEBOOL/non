@@ -1129,6 +1129,125 @@
       .flash-header { flex-direction: column; align-items: flex-start; }
     }
 
+    /* ─── BAZAAR (潮玩市集) ─────────────────────────────────── */
+    #bazaar { background: var(--ink); }
+    .bazaar-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+      margin-bottom: 56px;
+    }
+    .bazaar-header-right {
+      font-size: 12px; color: var(--muted); line-height: 1.8;
+      max-width: 380px; text-align: right;
+    }
+    /* 摊位卡片网格 */
+    .bazaar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+    .bazaar-card {
+      background: var(--gray);
+      position: relative; overflow: hidden;
+      cursor: none;
+      transition: background .3s;
+    }
+    .bazaar-card:hover { background: #1e1e1e; }
+    .bazaar-card-img {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .bazaar-card-img-inner {
+      font-family: var(--font-en);
+      font-size: clamp(22px, 3vw, 40px);
+      -webkit-text-stroke: 1px rgba(0,245,255,.2);
+      color: transparent;
+      line-height: 1; text-align: center;
+      transition: transform .5s cubic-bezier(.25,.46,.45,.94);
+    }
+    .bazaar-card:hover .bazaar-card-img-inner { transform: scale(1.08); }
+    .bazaar-stall-no {
+      position: absolute; bottom: 10px; right: 14px;
+      font-family: var(--font-en);
+      font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,.25);
+    }
+    .bazaar-card-body {
+      padding: 20px 22px 26px;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .bazaar-cat {
+      font-family: var(--font-en);
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 6px;
+    }
+    .bazaar-name {
+      font-size: 15px; font-weight: 700; color: var(--white);
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .bazaar-desc {
+      font-size: 11px; line-height: 1.8;
+      color: rgba(245,245,240,.4);
+    }
+    .bazaar-tag {
+      display: inline-block; margin-top: 12px;
+      font-family: var(--font-en);
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      border: 1px solid rgba(255,45,32,.45);
+      color: var(--red); padding: 3px 10px;
+    }
+    /* 特色摊位（宽度×2） */
+    .bazaar-card--wide {
+      grid-column: span 2;
+    }
+    .bazaar-card--wide .bazaar-card-img { height: 240px; }
+    /* 市集底部 CTA bar */
+    .bazaar-cta {
+      background: var(--black);
+      padding: 36px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+      border-top: 2px solid var(--cyan);
+      margin-top: 2px;
+    }
+    .bazaar-cta-left { }
+    .bazaar-cta-title {
+      font-family: var(--font-en);
+      font-size: 18px; letter-spacing: 1px; color: var(--white);
+    }
+    .bazaar-cta-title em { color: var(--cyan); font-style: normal; }
+    .bazaar-cta-sub {
+      font-size: 11px; color: var(--muted); margin-top: 4px;
+    }
+    .bazaar-dates {
+      display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+    }
+    .bazaar-date-item {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--gray); padding: 12px 20px;
+    }
+    .bazaar-date-city {
+      font-family: var(--font-en);
+      font-size: 10px; letter-spacing: 2px; color: var(--cyan);
+      text-transform: uppercase;
+    }
+    .bazaar-date-time {
+      font-size: 12px; color: rgba(245,245,240,.6);
+      margin-top: 3px;
+    }
+    @media (max-width: 1024px) {
+      .bazaar-grid { grid-template-columns: repeat(2, 1fr); }
+      .bazaar-card--wide { grid-column: span 2; }
+    }
+    @media (max-width: 640px) {
+      .bazaar-grid { grid-template-columns: 1fr; }
+      .bazaar-card--wide { grid-column: span 1; }
+      .bazaar-cta { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+      .bazaar-header { flex-direction: column; align-items: flex-start; }
+      .bazaar-header-right { text-align: left; }
+    }
+
     /* partner CTA */
     .partner-cta-row {
       margin-top: 56px;
@@ -1604,6 +1723,136 @@
     </div>
   </div>
 
+
+</section>
+
+<!-- ═══════════════ BAZAAR 潮玩市集 ═══════════════ -->
+<section id="bazaar">
+  <div class="section-label">BAZAAR</div>
+  <div class="bazaar-header" data-aos="fade-up">
+    <h2 class="section-title" style="margin-bottom:0">
+      潮玩<em>市集</em><br>
+      <s>NON BAZAAR</s>
+    </h2>
+    <div class="bazaar-header-right">
+      非遗手艺人 × 潮流主理人 × 独立艺术家<br>
+      集市现场联名 · 限量现货 · 即买即走<br>
+      <span style="color:var(--cyan);font-family:var(--font-en);font-size:10px;letter-spacing:2px;">EVERY SEASON · ROTATING LINEUP</span>
+    </div>
+  </div>
+
+  <div class="bazaar-grid">
+
+    <!-- 摊位 A — 宽卡 -->
+    <div class="bazaar-card bazaar-card--wide" data-aos="fade-up" data-aos-delay="0">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#0d0020 0%,#001a1a 100%);">
+        <div class="bazaar-card-img-inner">LACQUER<br>STUDIO</div>
+        <span class="bazaar-stall-no">STALL A-01</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">漆艺 · 潮改 · 现场体验</div>
+        <div class="bazaar-name">熔金漆艺工作室</div>
+        <div class="bazaar-desc">国家级非遗传承人现场演示髹漆技艺，同步售卖限量改造款潮流单品，可预约现场订制漆艺文字胸针。</div>
+        <span class="bazaar-tag">现场订制</span>
+      </div>
+    </div>
+
+    <!-- 摊位 B -->
+    <div class="bazaar-card" data-aos="fade-up" data-aos-delay="60">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#001505 0%,#0a0a0a 100%);">
+        <div class="bazaar-card-img-inner">CLAY<br>DROP</div>
+        <span class="bazaar-stall-no">STALL B-02</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">泥塑 · 雕塑</div>
+        <div class="bazaar-name">破壁泥塑</div>
+        <div class="bazaar-desc">现代解构造型，限量手工原作，附独立编号证书。</div>
+        <span class="bazaar-tag">限量30件</span>
+      </div>
+    </div>
+
+    <!-- 摊位 C -->
+    <div class="bazaar-card" data-aos="fade-up" data-aos-delay="120">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#10001a 0%,#0a0a0a 100%);">
+        <div class="bazaar-card-img-inner">BATIK<br>WAVE</div>
+        <span class="bazaar-stall-no">STALL C-03</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">蜡染 · 服饰</div>
+        <div class="bazaar-name">浪潮蜡染集市</div>
+        <div class="bazaar-desc">苗族植物染料，现场展示蜡染工序，服饰、包袋、帽子全系列现货。</div>
+        <span class="bazaar-tag">现货即买</span>
+      </div>
+    </div>
+
+    <!-- 摊位 D -->
+    <div class="bazaar-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#1a0500 0%,#0a0a0a 100%);">
+        <div class="bazaar-card-img-inner">PAPER<br>CUT</div>
+        <span class="bazaar-stall-no">STALL D-04</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">剪纸 · 潮玩</div>
+        <div class="bazaar-name">赛博剪纸手办</div>
+        <div class="bazaar-desc">传统剪纸纹样与3D打印工艺结合，可拆卸结构，荧光配色潮玩手办。</div>
+        <span class="bazaar-tag">联名款</span>
+      </div>
+    </div>
+
+    <!-- 摊位 E -->
+    <div class="bazaar-card" data-aos="fade-up" data-aos-delay="60">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#001a0d 0%,#0a0a0a 100%);">
+        <div class="bazaar-card-img-inner">SILK<br>KESI</div>
+        <span class="bazaar-stall-no">STALL E-05</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">缂丝 · 配件</div>
+        <div class="bazaar-name">躁动缂丝配件铺</div>
+        <div class="bazaar-desc">缂丝工艺胸章、发夹、手环，朋克金属底托，礼盒包装，集市独家价。</div>
+        <span class="bazaar-tag">市集独家</span>
+      </div>
+    </div>
+
+    <!-- 摊位 F — 宽卡 -->
+    <div class="bazaar-card bazaar-card--wide" data-aos="fade-up" data-aos-delay="120">
+      <div class="bazaar-card-img" style="background: linear-gradient(135deg,#1a0010 0%,#001015 100%);">
+        <div class="bazaar-card-img-inner">BLUE<br>WHITE<br>×<br>STREET</div>
+        <span class="bazaar-stall-no">STALL F-06</span>
+      </div>
+      <div class="bazaar-card-body">
+        <div class="bazaar-cat">青花 · 联名 · 街潮</div>
+        <div class="bazaar-name">量子青花 × 街潮联名区</div>
+        <div class="bazaar-desc">景德镇青花手绘与国内顶尖街潮品牌联名跨界，器皿、马克杯、手机壳三线齐发，市集现场首发限量款，全球同步上线前72小时独家预售。</div>
+        <span class="bazaar-tag">72H独家预售</span>
+      </div>
+    </div>
+
+  </div><!-- /bazaar-grid -->
+
+  <!-- 市集日历 CTA -->
+  <div class="bazaar-cta" data-aos="fade-up">
+    <div class="bazaar-cta-left">
+      <div class="bazaar-cta-title">下一场 <em>BAZAAR</em> 即将开市</div>
+      <div class="bazaar-cta-sub">每季轮换摊主阵容 · 扫码预登记可提前入场</div>
+    </div>
+    <div class="bazaar-dates">
+      <div class="bazaar-date-item">
+        <div class="bazaar-date-city">BEIJING</div>
+        <div class="bazaar-date-time">2026.09 · 三里屯</div>
+      </div>
+      <div class="bazaar-date-item">
+        <div class="bazaar-date-city">SHANGHAI</div>
+        <div class="bazaar-date-time">2026.10 · 新天地</div>
+      </div>
+      <div class="bazaar-date-item">
+        <div class="bazaar-date-city">CHENGDU</div>
+        <div class="bazaar-date-time">2026.11 · 太古里</div>
+      </div>
+    </div>
+    <button class="btn-partner" onclick="openModal('signup')">
+      <span>预登记入场 REGISTER →</span>
+    </button>
+  </div>
 
 </section>
 
